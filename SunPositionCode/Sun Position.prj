@@ -1,0 +1,144 @@
+<deployment-project plugin="plugin.toolbox" plugin-version="1.0">
+  <configuration file="C:\Users\Dozie\OneDrive\MATLAB\toolbox\SunPosition\SunPositionCode\Sun Position.prj" location="C:\Users\Dozie\OneDrive\MATLAB\toolbox\SunPosition\SunPositionCode" name="Sun Position" target="target.toolbox" target-name="Package Toolbox">
+    <param.appname>Sun Position</param.appname>
+    <param.authnamewatermark>Jeff Dozier</param.authnamewatermark>
+    <param.email>dozier@ucsb.edu</param.email>
+    <param.company>University of California, Santa Barbara</param.company>
+    <param.summary>Calculates declination, radius vector, equation of time, sun angles on horizontal surface and on slope.</param.summary>
+    <param.description />
+    <param.screenshot />
+    <param.version>1.0</param.version>
+    <param.output>${PROJECT_ROOT}\Sun Position.mltbx</param.output>
+    <param.products.name>
+      <item>Mapping Toolbox</item>
+    </param.products.name>
+    <param.products.id>
+      <item>11</item>
+    </param.products.id>
+    <param.products.version>
+      <item>4.10</item>
+    </param.products.version>
+    <param.platforms />
+    <param.guid>db941f37-2d27-4b6a-bdca-b2e01f11f685</param.guid>
+    <param.exclude.filters />
+    <param.exclude.pcodedmfiles>true</param.exclude.pcodedmfiles>
+    <param.examples />
+    <param.demosxml />
+    <param.apps />
+    <param.registered.apps />
+    <param.docs />
+    <param.getting.started.guide>${PROJECT_ROOT}\doc\GettingStarted.mlx</param.getting.started.guide>
+    <param.matlabpath.excludes />
+    <param.javaclasspath.excludes />
+    <param.exported.on.package>false</param.exported.on.package>
+    <param.required.addons />
+    <param.matlab.project.id />
+    <param.matlab.project.name />
+    <param.release.start>R2014b</param.release.start>
+    <param.release.end>latest</param.release.end>
+    <param.release.current.only>false</param.release.current.only>
+    <param.compatiblity.windows>true</param.compatiblity.windows>
+    <param.compatiblity.macos>true</param.compatiblity.macos>
+    <param.compatiblity.linux>true</param.compatiblity.linux>
+    <param.compatiblity.matlabonline>true</param.compatiblity.matlabonline>
+    <param.installation.map />
+    <param.additional.sw.names />
+    <param.additional.sw.licenses />
+    <param.additional.sw.win.url />
+    <param.additional.sw.mac.url />
+    <param.additional.sw.linux.url />
+    <unset>
+      <param.description />
+      <param.screenshot />
+      <param.version />
+      <param.output />
+      <param.platforms />
+      <param.exclude.filters />
+      <param.exclude.pcodedmfiles />
+      <param.examples />
+      <param.demosxml />
+      <param.apps />
+      <param.registered.apps />
+      <param.docs />
+      <param.matlabpath.excludes />
+      <param.javaclasspath.excludes />
+      <param.exported.on.package />
+      <param.required.addons />
+      <param.matlab.project.id />
+      <param.matlab.project.name />
+      <param.release.current.only />
+      <param.compatiblity.windows />
+      <param.compatiblity.macos />
+      <param.compatiblity.linux />
+      <param.compatiblity.matlabonline />
+      <param.installation.map />
+      <param.additional.sw.names />
+      <param.additional.sw.licenses />
+      <param.additional.sw.win.url />
+      <param.additional.sw.mac.url />
+      <param.additional.sw.linux.url />
+    </unset>
+    <fileset.rootdir>
+      <file>${PROJECT_ROOT}</file>
+    </fileset.rootdir>
+    <fileset.rootfiles>
+      <file>${PROJECT_ROOT}\doc</file>
+      <file>${PROJECT_ROOT}\EarthEphemeris.m</file>
+      <file>${PROJECT_ROOT}\Examples</file>
+      <file>${PROJECT_ROOT}\kasten.m</file>
+      <file>${PROJECT_ROOT}\NOAA_Solar_Calculations_day.xlsx</file>
+      <file>${PROJECT_ROOT}\README_AzimuthOrientation.txt</file>
+      <file>${PROJECT_ROOT}\refracted.m</file>
+      <file>${PROJECT_ROOT}\sunang.m</file>
+      <file>${PROJECT_ROOT}\sunRiseSet.m</file>
+      <file>${PROJECT_ROOT}\sunslope.m</file>
+    </fileset.rootfiles>
+    <fileset.depfun.included>
+      <file>C:\Users\Dozie\OneDrive\MATLAB\JeffFunctionLib\General\checkSizes.m</file>
+    </fileset.depfun.included>
+    <fileset.depfun.excluded />
+    <fileset.package />
+    <build-deliverables>
+      <file location="${PROJECT_ROOT}" name="Sun Position.mltbx" optional="false">C:\Users\Dozie\OneDrive\MATLAB\toolbox\SunPosition\SunPositionCode\Sun Position.mltbx</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>C:\Program Files\MATLAB\R2020a</root>
+      <toolboxes>
+        <toolbox name="matlabcoder" />
+        <toolbox name="embeddedcoder" />
+        <toolbox name="neuralnetwork" />
+      </toolboxes>
+      <toolbox>
+        <matlabcoder>
+          <enabled>true</enabled>
+        </matlabcoder>
+      </toolbox>
+      <toolbox>
+        <embeddedcoder>
+          <enabled>true</enabled>
+        </embeddedcoder>
+      </toolbox>
+      <toolbox>
+        <neuralnetwork>
+          <enabled>true</enabled>
+        </neuralnetwork>
+      </toolbox>
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>10.0</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>win64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>
