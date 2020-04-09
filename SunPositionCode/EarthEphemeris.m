@@ -7,7 +7,7 @@ function [ declin, radiusvector, solar_lon, varargout ] = EarthEphemeris( matdat
 %input
 %   matdates - scalar or vector or matrix, either of MATLAB datenums (UTC)
 %       or of MATLAB datetimes
-%       If datenums, time zone is assumed to be UTC.
+%       If datenum, time zone is assumed to be UTC.
 %       If datetime, time zone should be specified and will be converted to
 %       UTC internally, but is assumed to be UTC if not specified.
 %
@@ -15,6 +15,13 @@ function [ declin, radiusvector, solar_lon, varargout ] = EarthEphemeris( matdat
 %   declination & solar longitude in degrees
 %   radius vector in AU
 %   optional - equation of time
+%
+%Examples
+%   [declin,rv,sollon,eqT] = EarthEphemeris(now) % assumes UTC
+%   [declin,rv,sollon,eqT] = EarthEphemeris(datetime(now,'ConvertFrom','datenum','TimeZone','local'))
+%
+%See also
+%   sunang, sunRiseSet, sunslope
 
 % matdates to julian centuries
 p = inputParser;
