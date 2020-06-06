@@ -34,7 +34,7 @@ elseif t==1 % 2 of the 3 inputs are not scalar
 end
 
 % check P & T within range
-tp = P>1100 | P<300;
+tp = P>1200 | P<200;
 assert(nnz(tp)==0, 'pressure must be in hPa, current range is [%g %g]',...
     min(P(:)), max(P(:)))
 tt = T<30;
