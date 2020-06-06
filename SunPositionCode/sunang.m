@@ -9,30 +9,31 @@ function [mu0, phi0, airmass] = sunang( lat, lon, declin, omega, varargin )
 %   declin, solar declination
 %   omega, longitude at which sun is vertical
 %
-%  Optional arguments that go after omega, in the following order:
-%   zeroflag - if true, sets output negative cosines to zero and their
+%  Optional arguments as name-value pairs that go after omega, case-
+%   insensitive, in any order:
+%   'negzero' - if true, sets output negative cosines to zero and their
 %       corresponding azimuths to NaN, default true
 %       if false, returns negative cosines and their azimuths
-%   (next optional arguments are a pair, supply neither or both)
-%   P - pressure in hPa (same as mb), to correct for atmospheric path length and
-%       refraction, default ignore refraction
-%   T - temperature in Kelvin, to correct for atmospheric path length and
-%   	refraction, default ignore refraction
+%   (next optional arguments are a pair to correct for refraction, supply
+%   neither or both, default is to ignore refraction)
+%   'P' - pressure in hPa (same as mb)
+%   'T' - temperature in Kelvin
 %  Output:
 %   mu0, cosine of solar zenith angle
-%   phi0, solar azimuth (degrees, from south, + ccw)
+%   phi0, solar azimuth (degrees counter-clockwise from south or degrees
+%       clocksie from north, depending on how azimuthPreference is set)
 %   airmass - relative atmospheric path length, where 1.0 is the path
 %       length at solar zenith angle = 0
 %
 %Examples
 %   [declin,~,solar_lon] = EarthEphemeris(datetime('2020-06-30 5:30','TimeZone','Etc/GMT+8'))
 %   [mu0,azm,airmass] = sunang(38,-119,declin,solar_lon) % w/o refraction
-%   [mu0,azm,airmass] = sunang(38,-119,declin,solar_lon,true,1000,288) % w refraction
+%   [mu0,azm,airmass] = sunang(38,-119,declin,solar_lon,'P',1000,'T',288) % w refraction
 %   [mu0,azm,airmass] = sunang(30:5:50,-119,declin,solar_lon) % multiple latitudes
 %   sun below horizon
 %   [declin,~,solar_lon] = EarthEphemeris(datetime('2020-06-30 2:30','TimeZone','Etc/GMT+8'))
 %   [mu0,azm,airmass] = sunang(38,-119,declin,solar_lon) % cosine set to zero
-%   [mu0,azm,airmass] = sunang(38,-119,declin,solar_lon,false) % cosine negative
+%   [mu0,azm,airmass] = sunang(38,-119,declin,solar_lon,'negzero',false) % cosine negative
 
 p = inputParser;
 addRequired(p,'lat',@(x) isnumeric(x) && all(abs(x(:))<=90))
@@ -40,11 +41,14 @@ addRequired(p,'lon',@(x) isnumeric(x) && all(abs(x(:))<=180))
 addRequired(p,'declin',@(x) isnumeric(x) && all(abs(x(:))<=23.6))
 addRequired(p,'omega',@(x) isnumeric(x) && all(abs(x(:))<=180))
 % default is to set negative cosines to zero
-addOptional(p,'zeroflag',true,@(x) isnumeric(x) || islogical(x))
+addParameter(p,'negzero',true,@(x) isscalar(x) && (isnumeric(x) || islogical(x)))
 % default is to not account for refraction
-addOptional(p,'P',[],@(x) isnumeric(x) && all(x(:)>0))
-addOptional(p,'T',[],@(x) isnumeric(x) && all(x(:)>0))
+addParameter(p,'P',[],@(x) isnumeric(x) && all(x(:)>0))
+addParameter(p,'T',[],@(x) isnumeric(x) && all(x(:)>0))
 parse(p,lat,lon,declin,omega,varargin{:});
+
+negzero = logical(p.Results.negzero);
+convertAzm = azimuthPreference;
 
 assert(~xor(isempty(p.Results.P),isempty(p.Results.T)),...
     'if you specify pressure or temperature, you must specify both')
@@ -64,8 +68,11 @@ end
 
 [arclen, phi0] = distance(lat, lon, declin, omega);
 mu0 = cosd(arclen);
-% translate so that 0 is south, positive counter-clockwise
-phi0 = 180-phi0;
+% if convertAzm is true, translate so that 0 is south, positive counter-clockwise
+% otherwise MATLAB convention is clockwise from north
+if convertAzm
+    phi0 = 180-phi0;
+end
 
 % atmospheric refraction
 if ~isempty(p.Results.P)
@@ -76,7 +83,7 @@ end
 airmass = kasten(mu0);
 
 % set negative cosines to zero
-if p.Results.zeroflag
+if negzero
     t = mu0 < 0;
     if nnz(t)
         mu0(t) = 0;
