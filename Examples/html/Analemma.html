@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,IE=9,chrome=1"><meta name="generator" content="MATLAB 2021a"><title>Untitled</title><style type="text/css">.rtcContent { padding: 30px; } .S0 { margin: 2px 10px 9px 4px; padding: 0px; line-height: 21px; min-height: 0px; white-space: pre-wrap; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: 14px; font-weight: 400; text-align: left;  }
+.CodeBlock { background-color: #F7F7F7; margin: 10px 0 10px 0;}
+.S1 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 1px solid rgb(233, 233, 233); border-bottom: 0px none rgb(0, 0, 0); border-radius: 4px 4px 0px 0px; padding: 6px 45px 0px 13px; line-height: 17.234px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 14px;  }
+.S2 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 0px none rgb(0, 0, 0); border-bottom: 0px none rgb(0, 0, 0); border-radius: 0px; padding: 0px 45px 0px 13px; line-height: 17.234px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 14px;  }
+.S3 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 0px none rgb(0, 0, 0); border-bottom: 1px solid rgb(233, 233, 233); border-radius: 0px 0px 4px 4px; padding: 0px 45px 4px 13px; line-height: 17.234px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 14px;  }</style></head><body><div class = rtcContent><div  class = 'S0'><span>Plots analemma, based on current year (but there's hardly any difference between</span></div><div  class = 'S0'><span>years in the same century) plot analemma, based on current year daily datetime values, UTC</span></div><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S1'><span style="white-space: pre"><span style="color: rgb(14, 0, 255);">function </span><span >Analemma()</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >holdT = clock;</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >yr = holdT(1);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >n = 1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(14, 0, 255);">for </span><span >m=1:12</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >    </span><span style="color: rgb(14, 0, 255);">for </span><span >d=1:eomday(yr,m)</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >        dt(n) = datetime(yr,m,d,12,0,0);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >        n = n+1;</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >    </span><span style="color: rgb(14, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(14, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(2, 128, 9);">% solar position for each day</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >dt.TimeZone = </span><span style="color: rgb(170, 4, 249);">'Etc/GMT'</span><span >;</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >[declin,~,~,eqTime] = EarthEphemeris(dt);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >plot(eqTime,declin,</span><span style="color: rgb(170, 4, 249);">'LineWidth'</span><span >,1)</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >xlabel(</span><span style="color: rgb(170, 4, 249);">'equation of time, min'</span><span >)</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >ylabel(</span><span style="color: rgb(170, 4, 249);">'declination, deg'</span><span >)</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(2, 128, 9);">% plot month names along analemma</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >hold </span><span style="color: rgb(170, 4, 249);">on</span><span >;</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(14, 0, 255);">for </span><span >m=1:12</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >    thisDate = datetime([yr,m,15,12,0,0]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >    thisDate.TimeZone = dt.TimeZone;</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >    k = dt==thisDate;</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >    ds = datestr(thisDate,</span><span style="color: rgb(170, 4, 249);">'mmm'</span><span >);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >    text(eqTime(k),declin(k),ds)</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(14, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(2, 128, 9);">% explain</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >fprintf(</span><span style="color: rgb(170, 4, 249);">'declination is the latitude at which the solar zenith angle is zero\n'</span><span >)</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >fprintf(</span><span style="color: rgb(170, 4, 249);">'equation of time is solar time minus clock time (in January, the sun seems to linger near sunset)\n'</span><span >)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre"><span style="color: rgb(14, 0, 255);">end</span></span></div></div></div>
+<br>
+<!-- 
+##### SOURCE BEGIN #####
+function Analemma()
+%  ANALEMMA Plots analemma, based on current year (but there's hardly any difference between
+% 
+% years in the same century) plot analemma, based on current year daily datetime 
+% values, UTC
+holdT = clock;
+yr = holdT(1);
+n = 1;
+for m=1:12
+    for d=1:eomday(yr,m)
+        dt(n) = datetime(yr,m,d,12,0,0);
+        n = n+1;
+    end
+end
+% solar position for each day
+dt.TimeZone = 'Etc/GMT';
+[declin,~,~,eqTime] = EarthEphemeris(dt);
+plot(eqTime,declin,'LineWidth',1)
+xlabel('equation of time, min')
+ylabel('declination, deg')
+% plot month names along analemma
+hold on;
+for m=1:12
+    thisDate = datetime([yr,m,15,12,0,0]);
+    thisDate.TimeZone = dt.TimeZone;
+    k = dt==thisDate;
+    ds = datestr(thisDate,'mmm');
+    text(eqTime(k),declin(k),ds)
+end
+% explain
+fprintf('declination is the latitude at which the solar zenith angle is zero\n')
+fprintf('equation of time is solar time minus clock time (in January, the sun seems to linger near sunset)\n')
+end
+##### SOURCE END #####
+-->
+</div></body></html>

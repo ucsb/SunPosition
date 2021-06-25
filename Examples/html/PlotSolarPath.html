@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,IE=9,chrome=1"><meta name="generator" content="MATLAB 2021a"><title>Untitled</title><style type="text/css">.rtcContent { padding: 30px; } .S0 { margin: 2px 10px 9px 4px; padding: 0px; line-height: 21px; min-height: 0px; white-space: pre-wrap; color: rgb(0, 0, 0); font-family: Helvetica, Arial, sans-serif; font-style: normal; font-size: 14px; font-weight: 400; text-align: left;  }
+.CodeBlock { background-color: #F7F7F7; margin: 10px 0 10px 0;}
+.S1 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 1px solid rgb(233, 233, 233); border-bottom: 0px none rgb(0, 0, 0); border-radius: 4px 4px 0px 0px; padding: 6px 45px 0px 13px; line-height: 17.234px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 14px;  }
+.S2 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 0px none rgb(0, 0, 0); border-bottom: 0px none rgb(0, 0, 0); border-radius: 0px; padding: 0px 45px 0px 13px; line-height: 17.234px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 14px;  }
+.S3 { border-left: 1px solid rgb(233, 233, 233); border-right: 1px solid rgb(233, 233, 233); border-top: 0px none rgb(0, 0, 0); border-bottom: 1px solid rgb(233, 233, 233); border-radius: 0px 0px 4px 4px; padding: 0px 45px 4px 13px; line-height: 17.234px; min-height: 18px; white-space: nowrap; color: rgb(0, 0, 0); font-family: Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 14px;  }</style></head><body><div class = rtcContent><div  class = 'S0'><span>Plot solar path during the day for a specified location at date</span></div><div  class = 'S0'><span>Latitude and Longitude are in degrees, Latitude is + north, Longitude is +east.</span></div><div  class = 'S0'><span>MonthDay is a 2-element vector.</span></div><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S1'><span style="white-space: pre"><span style="color: rgb(14, 0, 255);">function </span><span >T = PlotSolarPath(Latitude, Longitude, MonthDay)</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >M = MonthDay(1);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >D = MonthDay(2);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(2, 128, 9);">% use current year</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >Y = clock;</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >Y = Y(1);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >dt = datetime([Y M D]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(2, 128, 9);">% times of sunrise and sunset</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >[sunrise,sunset] = sunRiseSet(Latitude,Longitude,dt);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(14, 0, 255);">if </span><span >isnat(sunrise)</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >    error(</span><span style="color: rgb(170, 4, 249);">'Sun not visible at this latitude (%g) and date(%s)'</span><span >,</span><span style="color: rgb(14, 0, 255);">...</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >        Latitude,datestr(dt))</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(14, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(2, 128, 9);">% dates in between</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >N = 200;</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >dplot = datetime(linspace(datenum(sunrise),datenum(sunset),N),</span><span style="color: rgb(14, 0, 255);">...</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >    </span><span style="color: rgb(170, 4, 249);">'ConvertFrom'</span><span >,</span><span style="color: rgb(170, 4, 249);">'datenum'</span><span >,</span><span style="color: rgb(170, 4, 249);">'TimeZone'</span><span >,sunrise.TimeZone);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(2, 128, 9);">% guess at local time based on longitude</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >zd = timezone(Longitude);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(14, 0, 255);">if </span><span >zd&gt;0</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >    dplot.TimeZone = [</span><span style="color: rgb(170, 4, 249);">'Etc/GMT+' </span><span >num2str(zd)];</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(14, 0, 255);">elseif </span><span >zd&lt;0</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >    dplot.TimeZone = [</span><span style="color: rgb(170, 4, 249);">'Etc/GMT' </span><span >num2str(zd)];</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(14, 0, 255);">else</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >    dplot.TimeZone = </span><span style="color: rgb(170, 4, 249);">'Etc/GMT'</span><span >;</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(14, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(2, 128, 9);">% solar Z and azimuth</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >[declin,~,solLon] = EarthEphemeris(dplot);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >[mu0,solarAzm] = sunang(Latitude,Longitude,declin,solLon);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(14, 0, 255);">if </span><span >any(isnan(solarAzm))</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >    t = ~isnan(solarAzm);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >    mu0 = mu0(t);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >    solarAzm = solarAzm(t);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >    dplot = dplot(t);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(14, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >solarZ = acosd(mu0);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(2, 128, 9);">% save table for sorting</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >T = table(dplot(:),solarZ(:),solarAzm(:),</span><span style="color: rgb(170, 4, 249);">'VariableNames'</span><span >,</span><span style="color: rgb(14, 0, 255);">...</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >    {</span><span style="color: rgb(170, 4, 249);">'Datetime'</span><span >,</span><span style="color: rgb(170, 4, 249);">'solarZ'</span><span >,</span><span style="color: rgb(170, 4, 249);">'solarAzm'</span><span >});</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >T = sortrows(T,</span><span style="color: rgb(170, 4, 249);">'solarAzm'</span><span >);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(2, 128, 9);">%polar plot</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >figure</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >plotAzm = -180:180;</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >theta = deg2rad(180-plotAzm);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(2, 128, 9);">% this call fails at North or South Poles because all solarAzm are either 0</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(2, 128, 9);">% or 180 (at North Pole, the sun is to the south, whereas at South Pole,</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(2, 128, 9);">% the sun is to the north)</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(14, 0, 255);">try</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >    F = fit(T.solarAzm,T.solarZ,</span><span style="color: rgb(170, 4, 249);">'pchip'</span><span >);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >    yval = 90-F(plotAzm);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >    t = plotAzm&lt;min(solarAzm-2) | plotAzm&gt;max(solarAzm+2);</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >    yval(t) = 0;</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(14, 0, 255);">catch</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >    yval = repmat(mean(90-T.solarZ),size(theta));</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span style="color: rgb(14, 0, 255);">end</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >polarplot(theta,yval,</span><span style="color: rgb(170, 4, 249);">'linewidth'</span><span >,1)</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >pax = gca;</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >pax.ThetaZeroLocation = </span><span style="color: rgb(170, 4, 249);">'top'</span><span >;</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >pax.ThetaDir = </span><span style="color: rgb(170, 4, 249);">'clockwise'</span><span >;</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >pax.ThetaTick = 0:45:315;</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >pax.ThetaTickLabel = {</span><span style="color: rgb(170, 4, 249);">'N'</span><span >,</span><span style="color: rgb(170, 4, 249);">'NE'</span><span >,</span><span style="color: rgb(170, 4, 249);">'E'</span><span >,</span><span style="color: rgb(170, 4, 249);">'SE'</span><span >,</span><span style="color: rgb(170, 4, 249);">'S'</span><span >,</span><span style="color: rgb(170, 4, 249);">'SW'</span><span >,</span><span style="color: rgb(170, 4, 249);">'W'</span><span >,</span><span style="color: rgb(170, 4, 249);">'NW'</span><span >};</span></span></div></div><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >title(</span><span style="color: rgb(170, 4, 249);">'solar elevation'</span><span >)</span></span></div></div><div class="inlineWrapper"><div  class = 'S3'><span style="white-space: pre"><span style="color: rgb(14, 0, 255);">end</span></span></div></div></div>
+<br>
+<!-- 
+##### SOURCE BEGIN #####
+function T = PlotSolarPath(Latitude, Longitude, MonthDay)
+%  PLOTSOLARPATH Plot solar path during the day for a specified location at date
+% 
+% Latitude and Longitude are in degrees, Latitude is + north, Longitude is +east.
+% 
+% MonthDay is a 2-element vector.
+M = MonthDay(1);
+D = MonthDay(2);
+% use current year
+Y = clock;
+Y = Y(1);
+dt = datetime([Y M D]);
+% times of sunrise and sunset
+[sunrise,sunset] = sunRiseSet(Latitude,Longitude,dt);
+if isnat(sunrise)
+    error('Sun not visible at this latitude (%g) and date(%s)',...
+        Latitude,datestr(dt))
+end
+% dates in between
+N = 200;
+dplot = datetime(linspace(datenum(sunrise),datenum(sunset),N),...
+    'ConvertFrom','datenum','TimeZone',sunrise.TimeZone);
+% guess at local time based on longitude
+zd = timezone(Longitude);
+if zd>0
+    dplot.TimeZone = ['Etc/GMT+' num2str(zd)];
+elseif zd<0
+    dplot.TimeZone = ['Etc/GMT' num2str(zd)];
+else
+    dplot.TimeZone = 'Etc/GMT';
+end
+% solar Z and azimuth
+[declin,~,solLon] = EarthEphemeris(dplot);
+[mu0,solarAzm] = sunang(Latitude,Longitude,declin,solLon);
+if any(isnan(solarAzm))
+    t = ~isnan(solarAzm);
+    mu0 = mu0(t);
+    solarAzm = solarAzm(t);
+    dplot = dplot(t);
+end
+solarZ = acosd(mu0);
+% save table for sorting
+T = table(dplot(:),solarZ(:),solarAzm(:),'VariableNames',...
+    {'Datetime','solarZ','solarAzm'});
+T = sortrows(T,'solarAzm');
+%polar plot
+figure
+plotAzm = -180:180;
+theta = deg2rad(180-plotAzm);
+% this call fails at North or South Poles because all solarAzm are either 0
+% or 180 (at North Pole, the sun is to the south, whereas at South Pole,
+% the sun is to the north)
+try
+    F = fit(T.solarAzm,T.solarZ,'pchip');
+    yval = 90-F(plotAzm);
+    t = plotAzm<min(solarAzm-2) | plotAzm>max(solarAzm+2);
+    yval(t) = 0;
+catch
+    yval = repmat(mean(90-T.solarZ),size(theta));
+end
+polarplot(theta,yval,'linewidth',1)
+pax = gca;
+pax.ThetaZeroLocation = 'top';
+pax.ThetaDir = 'clockwise';
+pax.ThetaTick = 0:45:315;
+pax.ThetaTickLabel = {'N','NE','E','SE','S','SW','W','NW'};
+title('solar elevation')
+end
+##### SOURCE END #####
+-->
+</div></body></html>

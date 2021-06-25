@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addonCore>
+  <label>SunPosition</label>
+  <version>2.0</version>
+  <type>Toolbox</type>
+  <identifier>8b497584-cab4-4d36-bf86-51ed40b9d0cd</identifier>
+  <summary>Contains functions for declination, solar longitude, radius vector, equation of time, times of sunrise and sunset, sun angles and azimuths.</summary>
+  <description>Uses the distance function from the MATLAB Mapping Toolbox to calculate the arc distance to the sub-solar location. Includes checkSizes function from my general function library.
+EarthEphemeris - Returns the solar declination, Earth-Sun radius vector (distance in astronomical units), solar longitude, and optionally the equation of time.
+sunang - Returns cosine of sun angle, its azimuth (0 south, + east), and airmass (path length accounting for Earth curvature). Optionally accounts for refraction.
+sunRiseSet - Times of sunrise and sunset.
+sunslope - Cosine of illumination angle on slope</description>
+  <createdBy name="Jeff Dozier"/>
+  <image>resources/screenshot.png</image>
+</addonCore>
